@@ -1,13 +1,31 @@
+using System.ComponentModel.DataAnnotations;
+using Library.Application;
+using Library.Visitor;
+
 namespace Library.Models
 {
     public class Book : IBook
     {
+        [Range(0, 10000)]
         public int Code { get; set; }
+        
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
+        
+        [Range(1, 10000)]
         public int Amount { get; set; }
+        
+        [Range(1900, 2022)]
         public int YearOfPublishing { get; set; }
+        
+        [StringLength(50, MinimumLength = 3)]  
         public string PublishingHouse { get; set; }
+        
+        [StringLength(50, MinimumLength = 3)]
         public string Author { get; set; }
+        
+        [StringLength(50, MinimumLength = 3)]
         public string Genre { get; set; }
         
         public Book(){}
@@ -21,6 +39,11 @@ namespace Library.Models
             PublishingHouse = publishingHouse;
             Author = author;
             Genre = genre;
+        }
+
+        public void Accept(Librarian lib, IBookVisitor visitor)
+        {
+            visitor.Visit(lib, this);
         }
     }
 }

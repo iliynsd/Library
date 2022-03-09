@@ -1,25 +1,25 @@
 using System;
+using Library.Application;
 using Library.Models;
 
 namespace Library.MenuUtils
 {
     public static class MenuRemoveUtil
     {
-        public static void ShowMenuRemove(Lib library)
+        public static void ShowMenuRemove(Librarian lib)
         {
-            Console.WriteLine("Enter name of book or magazine to remove:");
-            var name = Console.ReadLine();
-            var rez = 0;
-            rez += library.Books.RemoveAll(i => i.Name == name);
-            rez += library.Magazines.RemoveAll(i => i.Name == name);
+            Console.WriteLine("Enter name book or magazine to remove");
+            var rez = lib.Delete(Console.ReadLine());
             if (rez > 0)
             {
-                Console.WriteLine($"Successfully removed book or magazine with name - {name}");
+                Console.WriteLine($"Successfully deleted {rez} books and magazines");
             }
             else
-            { 
-                Console.WriteLine($"There is not any book or magazine with name - {name}");
-            }
+            {
+                Console.WriteLine("Not found books and magazines with this name");
+            } 
+            Console.WriteLine("You are returned to the main menu");
+            Console.WriteLine("Enter -help to see commands");
         }
     }
 }

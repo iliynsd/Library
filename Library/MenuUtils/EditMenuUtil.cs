@@ -1,17 +1,27 @@
 using System;
-using Library.Models;
+using Library.Application;
 using Library.Models.ModelsUtils;
 
 namespace Library.MenuUtils
 {
     public static class EditMenuUtil
     {
-        public static void ShowEditMenu(Lib library)
+        public static void ShowEditMenu(Librarian librarian)
         {
             Console.WriteLine("Enter name of book or magazine to edit:");
             var name = Console.ReadLine();
-            library.Books.FindAll(i => i.Name == name).ForEach(BookUtil.EditBook);
-            library.Magazines.FindAll(i => i.Name == name).ForEach(MagazineUtil.EditMagazine);
+            var books = librarian.FindEntity(name);
+            if (books.Count > 0)
+            {
+                books.ForEach(i => i.Accept(librarian, new Edit()));
+            }
+            else
+            {
+                Console.WriteLine("There aren't any books and magazines with this name");
+            }
+                
+            Console.WriteLine("You are returned to the main menu");
+            Console.WriteLine("Enter -help to see commands");
         }
     }
 }
