@@ -1,54 +1,44 @@
 ﻿using System;
-using Library.MenuUtils;
-using Library.Models;
-using Library.Models.ModelsUtils;
+using Library.Repositories;
+using Library.Utils;
+
 
 namespace Library.Application
 {
     static class Program
     {
-
-        
         static void Main()
         {
-            var librarian = new Librarian();
+            var books = new BookRepository();
+            var magazines = new MagazineRepository();
 
-            librarian.Add(new Book()
-                {Amount = 1, Author = "we", Code = 1, Genre= "q", Name = "errty", PublishingHouse= "we", YearOfPublishing = 2});
-
-            librarian.FindEntity("errty").ForEach(i => i.Accept(librarian, new Show()));
-            var book = new Magazine();
-            book.Accept(librarian, new Create());
-            
-            librarian.FindEntity("errty").ForEach(i => i.Accept(librarian, new Show()));
-            
-             Console.WriteLine("It's a librarian, enter -help to see commands");
-               var cmd = Console.ReadLine();
+            Console.WriteLine("It's a librarian, enter -help to see commands");
+            var cmd = Console.ReadLine();
                
                while (cmd != "-end")
                {
                     if (cmd == "-add")
                     {
-                        MenuAddUtil.ShowMenuAdd(librarian);
+                        MenuUtil.ShowMenuAdd(books, magazines);
                     }
                     else if (cmd == "-help")
                     {
-                        MainMenuUtil.ShowMainMenu();
+                        MenuUtil.ShowMainMenu();
                     }
                     
                     else if (cmd == "-remove")
                     {
-                        MenuRemoveUtil.ShowMenuRemove(librarian);
+                        MenuUtil.ShowMenuRemove(books, magazines);
                     }
    
                     else if (cmd == "-edit")
                     {
-                        EditMenuUtil.ShowEditMenu(librarian);
+                        MenuUtil.ShowEditMenu(books, magazines);
                     }
    
                     else if (cmd == "-search")
                     {
-                        MenuSearchUtil.ShowMenuSearch(librarian);
+                        MenuUtil.ShowMenuSearch(books, magazines);
                     }
                     else
                     {

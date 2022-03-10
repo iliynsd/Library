@@ -1,10 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using Library.Application;
-using Library.Visitor;
 
 namespace Library.Models
 {
-    public class Book : IBook
+    public class Book 
     {
         [Range(0, 10000)]
         public int Code { get; set; }
@@ -39,11 +37,6 @@ namespace Library.Models
             PublishingHouse = publishingHouse;
             Author = author;
             Genre = genre;
-        }
-
-        public void Accept(Librarian lib, IBookVisitor visitor)
-        {
-            visitor.Visit(lib, this);
         }
     }
 }
