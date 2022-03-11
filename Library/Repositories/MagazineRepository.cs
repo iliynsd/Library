@@ -29,6 +29,7 @@ namespace Library.Repositories
             if (ValidatorUtil.ValidateMagazine(createdMagazine))
             {
                 _magazines.Add(createdMagazine);
+                Console.WriteLine("Magazine was successfully added");
             }
             else
             {

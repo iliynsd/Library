@@ -42,6 +42,7 @@ namespace Library.Application
                     }
                     else
                     {
+                        Console.WriteLine("No such command");
                         Console.WriteLine("Enter -help to see commands");
                     }
                     cmd = Console.ReadLine();

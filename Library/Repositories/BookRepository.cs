@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Library.Models;
 using Library.Utils;
 
@@ -28,6 +29,7 @@ namespace Library.Repositories
             if (ValidatorUtil.ValidateBook(createdBook))
             {
                 _books.Add(createdBook);
+                Console.WriteLine("Book was successfully add");
             }
             else
             {
@@ -37,7 +39,16 @@ namespace Library.Repositories
 
         public void Show(string name)
         {
-            _books.FindAll(i => i.Name == name).ForEach(ShowBook);
+            var books = _books.FindAll(i => i.Name == name);
+            
+            if (books.Count > 0)
+            {
+                books.ForEach(ShowBook);
+            }
+            else
+            {
+                Console.WriteLine($"No books with this name - {name}");
+            }
 
             void ShowBook(Book book)
             {
