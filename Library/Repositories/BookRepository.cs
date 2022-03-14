@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Library.Models;
 using Library.Utils;
 
 namespace Library.Repositories
 {
-    public class BookRepository : IRepository
+    public class BookRepository : IRepository<Book>
     {
         private List<Book> _books = new List<Book>();
         public void Create()
@@ -144,5 +143,9 @@ namespace Library.Repositories
                 Console.WriteLine($"Removed {rez} books");
             }
         }
+
+        public List<Book> GetAll() => _books;
+
+        public void Add(Book book) => _books.Add(book);
     }
 }

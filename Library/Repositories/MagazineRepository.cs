@@ -5,7 +5,7 @@ using Library.Utils;
 
 namespace Library.Repositories
 {
-    public class MagazineRepository : IRepository
+    public class MagazineRepository : IRepository<Magazine>
     {
         private List<Magazine> _magazines = new List<Magazine>();
 
@@ -39,7 +39,16 @@ namespace Library.Repositories
 
         public void Show(string name)
         {
-            _magazines.FindAll(i => i.Name == name).ForEach(ShowMagazine);
+            var magazines = _magazines.FindAll(i => i.Name == name);
+            
+            if (magazines.Count > 0)
+            {
+                magazines.ForEach(ShowMagazine);
+            }
+            else
+            {
+                Console.WriteLine($"No magazines with this name - {name}");
+            }
 
             void ShowMagazine(Magazine magazine)
             {
@@ -135,5 +144,9 @@ namespace Library.Repositories
                 Console.WriteLine($"Removed {rez} magazines");
             }
         }
+        
+        public List<Magazine> GetAll() => _magazines;
+
+        public void Add(Magazine magazine) => _magazines.Add(magazine);
     }
 }

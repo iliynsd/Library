@@ -11,7 +11,7 @@ namespace Library.Models
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
         
-        [Range(1, 10000)]
+        [Range(0, 10000)]
         public int Amount { get; set; }
         
         [Range(1900, 2022)]

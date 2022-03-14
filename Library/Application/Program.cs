@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Library.Repositories;
 using Library.Utils;
 
@@ -40,6 +41,23 @@ namespace Library.Application
                     {
                         MenuUtil.ShowMenuSearch(books, magazines);
                     }
+                    
+                    else if (cmd == "-save")
+                    {
+                        FileUtil.SaveBooks(books);
+                        FileUtil.SaveMagazines(magazines);
+                        Console.WriteLine("Successfully saved");
+                        Console.WriteLine("You are returned to the main menu");
+                    }
+                    
+                    else if (cmd == "-read")
+                    {
+                        books = FileUtil.ReadBooks();
+                        magazines = FileUtil.ReadMagazines();
+                        Console.WriteLine("Successfully read data from files");
+                        Console.WriteLine("You are returned to the main menu");
+                    }
+                    
                     else
                     {
                         Console.WriteLine("No such command");
