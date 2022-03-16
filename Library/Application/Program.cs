@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Library.Repositories;
 using Library.Utils;
-
 
 namespace Library.Application
 {
@@ -12,7 +10,6 @@ namespace Library.Application
         {
             var books = new BookRepository();
             var magazines = new MagazineRepository();
-
             Console.WriteLine("It's a librarian, enter -help to see commands");
             var cmd = Console.ReadLine();
                
@@ -20,40 +17,40 @@ namespace Library.Application
                {
                     if (cmd == "-add")
                     {
-                        MenuUtil.ShowMenuAdd(books, magazines);
+                        ConsoleMenu.ShowMenuAdd(books, magazines);
                     }
                     else if (cmd == "-help")
                     {
-                        MenuUtil.ShowMainMenu();
+                        ConsoleMenu.ShowMainMenu();
                     }
                     
                     else if (cmd == "-remove")
                     {
-                        MenuUtil.ShowMenuRemove(books, magazines);
+                        ConsoleMenu.ShowMenuRemove(books, magazines);
                     }
    
                     else if (cmd == "-edit")
                     {
-                        MenuUtil.ShowEditMenu(books, magazines);
+                        ConsoleMenu.ShowEditMenu(books, magazines);
                     }
    
                     else if (cmd == "-search")
                     {
-                        MenuUtil.ShowMenuSearch(books, magazines);
+                        ConsoleMenu.ShowMenuSearch(books, magazines);
                     }
                     
                     else if (cmd == "-save")
                     {
-                        FileUtil.SaveBooks(books);
-                        FileUtil.SaveMagazines(magazines);
+                        FileBaseRepository.SaveBooks(books);
+                        FileBaseRepository.SaveMagazines(magazines);
                         Console.WriteLine("Successfully saved");
                         Console.WriteLine("You are returned to the main menu");
                     }
                     
                     else if (cmd == "-read")
                     {
-                        books = FileUtil.ReadBooks();
-                        magazines = FileUtil.ReadMagazines();
+                        books = FileBaseRepository.ReadBooks();
+                        magazines = FileBaseRepository.ReadMagazines();
                         Console.WriteLine("Successfully read data from files");
                         Console.WriteLine("You are returned to the main menu");
                     }

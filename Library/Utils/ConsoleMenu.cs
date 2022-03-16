@@ -1,9 +1,10 @@
 using System;
 using Library.Repositories;
+using Library.UI;
 
 namespace Library.Utils
 {
-    public class MenuUtil
+    public class ConsoleMenu
     {
         public static void ShowMainMenu()
         {
@@ -23,11 +24,11 @@ namespace Library.Utils
             
             if (choose == "-book")
             {
-                bookRepo.Create();
+                bookRepo.Add(UIConsoleCreate.CreateBook());
             }
             else if (choose == "-magazine")
             {
-                magazineRepo.Create();
+                magazineRepo.Add(UIConsoleCreate.CreateMagazine());
             }
             else
             {
@@ -48,11 +49,11 @@ namespace Library.Utils
             
             if (choose == "-book")
             {
-                bookRepo.Delete(name);
+                bookRepo.Find(name).ForEach(bookRepo.Delete);
             }
             else if (choose == "-magazine")
             {
-                magazineRepo.Delete(name);
+                magazineRepo.Find(name).ForEach(magazineRepo.Delete);
             }
             else
             {
@@ -68,8 +69,8 @@ namespace Library.Utils
         {
             Console.WriteLine("Enter name of book or magazine to search");
             var name = Console.ReadLine();
-            bookRepo.Show(name);
-            magazineRepo.Show(name);
+            bookRepo.Find(name).ForEach(UIConsoleShow.ShowBook);
+            magazineRepo.Find(name).ForEach(UIConsoleShow.ShowMagazine);
             Console.WriteLine("You are returned to the main menu");
             Console.WriteLine("Enter -help to see commands");
         }
@@ -83,11 +84,11 @@ namespace Library.Utils
             
             if (choose == "-book")
             {
-                bookRepo.Edit(name);
+                bookRepo.Find(name).ForEach(UIConsoleEdit.EditBook);
             }
             else if (choose == "-magazine")
             {
-                magazineRepo.Edit(name);
+                magazineRepo.Find(name).ForEach(UIConsoleEdit.EditMagazine);
             }
             else
             {

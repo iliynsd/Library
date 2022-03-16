@@ -1,151 +1,67 @@
-using System;
 using System.Collections.Generic;
+using System.IO;
 using Library.Models;
 using Library.Utils;
 
+
 namespace Library.Repositories
 {
-    public class BookRepository : IRepository<Book>
+    public class BookRepository : FileBaseRepository<BookRepository>, IRepository<Book> 
     {
-        private List<Book> _books = new List<Book>();
-        public void Create()
-        {
-            Console.WriteLine("Enter the code of book:");
-            var code = ValidatorUtil.TryEnterNaturalNum();
-            Console.WriteLine("Enter the name of book:");
-            var name = ValidatorUtil.TryEnterStringNotNum();
-            Console.WriteLine("Enter the amount of the book:");
-            var amount = ValidatorUtil.TryEnterNaturalNum();
-            Console.WriteLine("Enter the year of publishing the book:");
-            var yearOfPublishing = ValidatorUtil.TryEnterNaturalNum();
-            Console.WriteLine("Enter the publishing house of the book:");
-            var publishingHouse = ValidatorUtil.TryEnterStringNotNum();
-            Console.WriteLine("Enter the author of the book:");
-            var author = ValidatorUtil.TryEnterStringNotNum();
-            Console.WriteLine("Enter the genre of the book:");
-            var genre = ValidatorUtil.TryEnterStringNotNum();
-            var createdBook = new Book(code, name, amount, yearOfPublishing, publishingHouse, author, genre);
-            if (ValidatorUtil.ValidateBook(createdBook))
-            {
-                _books.Add(createdBook);
-                Console.WriteLine("Book was successfully add");
-            }
-            else
-            {
-                Console.WriteLine("Book wasn't added");
-            }
-        }
-
-        public void Show(string name)
-        {
-            var books = _books.FindAll(i => i.Name == name);
-            
-            if (books.Count > 0)
-            {
-                books.ForEach(ShowBook);
-            }
-            else
-            {
-                Console.WriteLine($"No books with this name - {name}");
-            }
-
-            void ShowBook(Book book)
-            {
-                Console.WriteLine("-----Book-----");
-                Console.WriteLine($"Code - {book.Code}");
-                Console.WriteLine($"Name - {book.Name}");
-                Console.WriteLine($"Amount - {book.Amount}");
-                Console.WriteLine($"Year of publishing - {book.YearOfPublishing}");
-                Console.WriteLine($"Publishing house - {book.PublishingHouse}");
-                Console.WriteLine($"Author - {book.Author}");
-                Console.WriteLine($"Genre - {book.Genre}");
-            }
-        }
+        private List<Book> _books;
+        protected override string RepositoryName { get; }
         
-        public void Edit(string name)
+        public BookRepository()
         {
-            var book = _books.Find(i => i.Name == name);
-            if (book == null)
-            {
-                Console.WriteLine($"No books with this name - {name}");
-                return;
-            }
-            string choose;
-            do
-            {
-                Console.WriteLine("Book has this fields: code;name;amount;yearOfPublishing;publishingHouse;author;genre");
-                Console.WriteLine("Enter field you want to edit or enter -leave to stop making changes");
-                choose = ValidatorUtil.TryEnterStringNotNum();
-
-                if (choose == "code")
-                {
-                    Console.WriteLine("Enter the new code of book");
-                    book.Code = ValidatorUtil.TryEnterNaturalNum();
-                }
-
-                else if (choose == "name")
-                {
-                    Console.WriteLine("Enter the new name of book:");
-                    book.Name = ValidatorUtil.TryEnterStringNotNum();
-                }
-
-                else if (choose == "amount")
-                {
-                    Console.WriteLine("Enter the new amount of the book:");
-                    book.Amount = ValidatorUtil.TryEnterNaturalNum();
-                }
-
-                else if (choose == "yearOfPublishing")
-                {
-                    Console.WriteLine("Enter the new year of publishing the book:");
-                    book.YearOfPublishing = ValidatorUtil.TryEnterNaturalNum();
-                }
-
-                else if (choose == "publishingHouse")
-                {
-                    Console.WriteLine("Enter the new publishing house of the book:");
-                    book.PublishingHouse = ValidatorUtil.TryEnterStringNotNum();
-                }
-
-                else if (choose == "author")
-                {
-                    Console.WriteLine("Enter the new author of the book:");
-                    book.Author = ValidatorUtil.TryEnterStringNotNum();
-                }
-
-                else if (choose == "genre")
-                {
-                    Console.WriteLine("Enter the new genre of the book:");
-                    book.Genre = ValidatorUtil.TryEnterStringNotNum();
-                }
-            } while (choose != "-leave");
-
-            if (!ValidatorUtil.ValidateBook(book))
-            {
-                Console.WriteLine("Edit one more time");
-                Edit(name);
-            }
-            else
-            {
-                Console.WriteLine("Edit book successfully");
-            }
+            _books = new List<Book>();
         }
-
-        public void Delete(string name)
-        {
-            var rez = _books.RemoveAll(i => i.Name.ToLower() == name.ToLower());
-            if (rez <= 0)
-            { 
-                Console.WriteLine($"No books with this name - {name}");
-            }
-            else
-            {
-                Console.WriteLine($"Removed {rez} books");
-            }
-        }
+        public void Delete(Book book) => _books.RemoveAll(i => i.Name.ToLower() == book.Name.ToLower());
 
         public List<Book> GetAll() => _books;
-
+        
         public void Add(Book book) => _books.Add(book);
+
+        public List<Book> Find(string name) => _books.FindAll(i => i.Name.ToLower() == name.ToLower());
+        protected override void Write(BinaryWriter writer, BookRepository bookRepo)
+        {
+            foreach (var book in bookRepo.GetAll())
+            {
+                if (book.Name != null)
+                {
+                    writer.Write(book.Code);
+                    writer.Write(book.Name);
+                    writer.Write(book.Amount);
+                    writer.Write(book.YearOfPublishing);
+                    writer.Write(book.PublishingHouse);
+                    writer.Write(book.Author);
+                    writer.Write(book.Genre);
+                }
+            }
+        }
+
+        protected override BookRepository Read(BinaryReader reader)
+        {
+            var bookRepo = new BookRepository();
+            while (reader.PeekChar() > -1)
+            {
+                var book = new Book
+                {
+                    Code = reader.ReadInt32(),
+                    Name = reader.ReadString(),
+                    Amount = reader.ReadInt32(),
+                    YearOfPublishing = reader.ReadInt32(),
+                    PublishingHouse = reader.ReadString(),
+                    Author = reader.ReadString(),
+                    Genre = reader.ReadString()
+                };
+
+                if (book.Name != null)
+                {
+                    bookRepo.Add(book);
+                }
+            }
+
+            return bookRepo;
+        }
     }
 }

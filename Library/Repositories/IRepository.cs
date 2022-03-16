@@ -4,11 +4,12 @@ namespace Library.Repositories
 {
     public interface IRepository<T>
     {
-        public void Create();
-        public void Show(string name);
-        public void Edit(string name);
-        public void Delete(string name);
+        public void Add(T item);
+        
+        public void Delete(T item);
+        
         public List<T> GetAll();
-        public void Add(T obj);
+        
+        public List<T> Find(string name);
     }
 }
