@@ -9,23 +9,23 @@ namespace Library.Repositories
     {
         private List<Magazine> _magazines;
         protected override string RepositoryName { get; }
-        
+
         public MagazineRepository()
         {
             _magazines = new List<Magazine>();
         }
-        
+
         public void Delete(Magazine magazine) => _magazines.RemoveAll(i => i.Name.ToLower() == magazine.Name.ToLower());
-        
+
         public List<Magazine> GetAll() => _magazines;
 
         public void Add(Magazine magazine) => _magazines.Add(magazine);
 
         public List<Magazine> Find(string name) => _magazines.FindAll(i => i.Name.ToLower() == name.ToLower());
-        
-        protected override void Write(BinaryWriter writer, MagazineRepository item)
+
+        protected override void Write(BinaryWriter writer, MagazineRepository magazineRepo)
         {
-            foreach (var magazine in _magazines)
+            foreach (var magazine in magazineRepo.GetAll())
             {
                 if (magazine.Name == null)
                     continue;

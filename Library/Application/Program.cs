@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Library.Config;
 using Library.Repositories;
 using Library.Utils;
 
@@ -41,16 +43,17 @@ namespace Library.Application
                     
                     else if (cmd == "-save")
                     {
-                        FileBaseRepository.SaveBooks(books);
-                        FileBaseRepository.SaveMagazines(magazines);
+                        books.SaveToFile(books, Configuration.PathToBooks);
+                        magazines.SaveToFile(magazines, Configuration.PathToMagazines);
+                        Console.WriteLine(Path.GetFullPath(Configuration.PathToBooks));
                         Console.WriteLine("Successfully saved");
                         Console.WriteLine("You are returned to the main menu");
                     }
                     
                     else if (cmd == "-read")
                     {
-                        books = FileBaseRepository.ReadBooks();
-                        magazines = FileBaseRepository.ReadMagazines();
+                        books = books.GetFromFile(Configuration.PathToBooks);
+                        magazines = magazines.GetFromFile(Configuration.PathToMagazines);
                         Console.WriteLine("Successfully read data from files");
                         Console.WriteLine("You are returned to the main menu");
                     }

@@ -48,7 +48,7 @@ namespace Library.Utils
             var choose = Console.ReadLine();
             
             if (choose == "-book")
-            {
+            { 
                 bookRepo.Find(name).ForEach(bookRepo.Delete);
             }
             else if (choose == "-magazine")
@@ -61,6 +61,7 @@ namespace Library.Utils
                 return;
             }
             
+            Console.WriteLine("Successfully deleted if exists");
             Console.WriteLine("You are returned to the main menu");
             Console.WriteLine("Enter -help to see commands");
         }
