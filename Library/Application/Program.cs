@@ -30,6 +30,8 @@ namespace Library.Application
             
             var pathToBooks = testConfiguration.GetSection("pathToBooks");
             var pathToMagazines = testConfiguration.GetSection("pathToMagazines");
+
+            var librarian = new Librarian();
             
             Console.WriteLine("It's a librarian, enter -help to see commands");
             var cmd = Console.ReadLine();
@@ -38,7 +40,8 @@ namespace Library.Application
                {
                     if (cmd == "-add")
                     {
-                        ConsoleMenu.ShowMenuAdd(books, magazines);
+                        librarian.Add(ConsoleMenu.ShowMenuAdd(), books, magazines);
+                        Console.WriteLine("Successfully add, you are returned to the main menu");
                     }
                     else if (cmd == "-help")
                     {
@@ -47,17 +50,20 @@ namespace Library.Application
                     
                     else if (cmd == "-remove")
                     {
-                        ConsoleMenu.ShowMenuRemove(books, magazines);
+                        librarian.Remove(ConsoleMenu.ShowMenuRemove(), books, magazines);
+                        Console.WriteLine("Successfully remove, you are returned to the main menu");
                     }
    
                     else if (cmd == "-edit")
                     {
-                        ConsoleMenu.ShowEditMenu(books, magazines);
+                        librarian.Edit(ConsoleMenu.ShowEditMenu(), books, magazines);
+                        Console.WriteLine("Successfully edit, you are returned to the main menu");
                     }
    
                     else if (cmd == "-search")
                     {
-                        ConsoleMenu.ShowMenuSearch(books, magazines);
+                        librarian.Search(ConsoleMenu.ShowMenuSearch(), books, magazines);
+                        Console.WriteLine("You are returned to the main menu");
                     }
                     
                     else if (cmd == "-save")
