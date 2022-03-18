@@ -17,88 +17,34 @@ namespace Library.Utils
             Console.WriteLine("----------  7.Enter -end to end program  --------");
         }
         
-        public static void ShowMenuAdd(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
+        public static string ShowMenuAdd()
         {
             Console.WriteLine("Enter -book or -magazine to choose");
             var choose = Console.ReadLine();
-            
-            if (choose == "-book")
-            {
-                bookFileRepo.Add(UIConsoleCreate.CreateBook());
-            }
-            else if (choose == "-magazine")
-            {
-                magazineFileRepo.Add(UIConsoleCreate.CreateMagazine());
-            }
-            else
+            if(choose!= "-book" && choose!= "-magazine")
             {
                 Console.WriteLine("Incorrect input, you are returned to the main menu");
-                return;
             }
             
-            Console.WriteLine("You are returned to the main menu ");
-            Console.WriteLine("Enter -help to see commands");
+            return choose;
         }
         
-        public static void ShowMenuRemove(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
+        public static string ShowMenuRemove()
         {
             Console.WriteLine("Enter name book or magazine to remove");
-            var name = Console.ReadLine();
-            Console.WriteLine("Enter -book or -magazine to remove");
-            var choose = Console.ReadLine();
-            
-            if (choose == "-book")
-            { 
-                bookFileRepo.Find(name).ForEach(bookFileRepo.Delete);
-            }
-            else if (choose == "-magazine")
-            {
-                magazineFileRepo.Find(name).ForEach(magazineFileRepo.Delete);
-            }
-            else
-            {
-                Console.WriteLine("Incorrect input, you are returned to the main menu");
-                return;
-            }
-            
-            Console.WriteLine("Successfully deleted if exists");
-            Console.WriteLine("You are returned to the main menu");
-            Console.WriteLine("Enter -help to see commands");
+            return Console.ReadLine();
         }
         
-        public static void ShowMenuSearch(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
+        public static string ShowMenuSearch()
         {
             Console.WriteLine("Enter name of book or magazine to search");
-            var name = Console.ReadLine();
-            bookFileRepo.Find(name).ForEach(UIConsoleShow.ShowBook);
-            magazineFileRepo.Find(name).ForEach(UIConsoleShow.ShowMagazine);
-            Console.WriteLine("You are returned to the main menu");
-            Console.WriteLine("Enter -help to see commands");
+            return Console.ReadLine();
         }
         
-        public static void ShowEditMenu(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
+        public static string ShowEditMenu()
         {
             Console.WriteLine("Enter name book or magazine to edit");
-            var name = Console.ReadLine();
-            Console.WriteLine("Enter -book or -magazine to edit");
-            var choose = Console.ReadLine();
-            
-            if (choose == "-book")
-            {
-                bookFileRepo.Find(name).ForEach(UIConsoleEdit.EditBook);
-            }
-            else if (choose == "-magazine")
-            {
-                magazineFileRepo.Find(name).ForEach(UIConsoleEdit.EditMagazine);
-            }
-            else
-            {
-                Console.WriteLine("Incorrect input, you are returned to the main menu");
-                return;
-            }
-            
-            Console.WriteLine("You are returned to the main menu");
-            Console.WriteLine("Enter -help to see commands");
+            return Console.ReadLine();
         }
     }
 }
