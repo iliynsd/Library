@@ -2,12 +2,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace Library.Config
 {
-    public static class Configuration
+    public class Configuration
     {
-        private static readonly IConfiguration _configuration = new ConfigurationBuilder().AddJsonFile("appSettings.json").Build();
-        public static string PathToBooks => GetSection("pathToBooks");
-        public static string PathToMagazines => GetSection("pathToMagazines");
+        private readonly IConfiguration _configuration;
+
+        public Configuration(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         
-        public static string GetSection(string name) => _configuration.GetSection(name).Value;
+        public string GetSection(string name) => _configuration.GetSection(name).Value;
     }
 }

@@ -3,6 +3,8 @@ using System.IO;
 using Library.Config;
 using Library.Repositories;
 using Library.Utils;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Library.Application
 {
@@ -10,8 +12,31 @@ namespace Library.Application
     {
         static void Main()
         {
-            var books = new BookRepository();
-            var magazines = new MagazineRepository();
+            var serviceCollection = new ServiceCollection();
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName).AddJsonFile("appSettings.json")
+                .Build();
+
+            
+            IBookRepository bookRepo = new BookFileRepository();
+            IMagazineRepository magazineRepo = new MagazineFileRepository();
+            
+            serviceCollection.AddSingleton(configuration);
+            serviceCollection.AddSingleton<Configuration>();
+            serviceCollection.AddSingleton(bookRepo);
+            serviceCollection.AddSingleton<BookRepositoryDI>();
+            serviceCollection.AddSingleton(magazineRepo);
+            serviceCollection.AddSingleton<MagazineRepositoryDI>();
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+            var testConfiguration = serviceProvider.GetService<Configuration>();
+            
+            var pathToBooks = testConfiguration.GetSection("pathToBooks");
+            var pathToMagazines = testConfiguration.GetSection("pathToMagazines");
+            
+            
+            var books = serviceProvider.GetService<BookRepositoryDI>();
+            var magazines = serviceProvider.GetService<MagazineRepositoryDI>();
+            
             Console.WriteLine("It's a librarian, enter -help to see commands");
             var cmd = Console.ReadLine();
                
@@ -43,17 +68,16 @@ namespace Library.Application
                     
                     else if (cmd == "-save")
                     {
-                        books.SaveToFile(books, Configuration.PathToBooks);
-                        magazines.SaveToFile(magazines, Configuration.PathToMagazines);
-                        Console.WriteLine(Path.GetFullPath(Configuration.PathToBooks));
+                        books.SaveToFile(books, pathToBooks);
+                        magazines.SaveToFile(magazines, pathToMagazines);
                         Console.WriteLine("Successfully saved");
                         Console.WriteLine("You are returned to the main menu");
                     }
                     
                     else if (cmd == "-read")
                     {
-                        books = books.GetFromFile(Configuration.PathToBooks);
-                        magazines = magazines.GetFromFile(Configuration.PathToMagazines);
+                        books = books.GetFromFile(pathToBooks);
+                        magazines = magazines.GetFromFile(pathToMagazines);
                         Console.WriteLine("Successfully read data from files");
                         Console.WriteLine("You are returned to the main menu");
                     }

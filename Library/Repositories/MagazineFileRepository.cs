@@ -5,12 +5,12 @@ using Library.Utils;
 
 namespace Library.Repositories
 {
-    public class MagazineRepository : FileBaseRepository<MagazineRepository>, IRepository<Magazine>
+    public class MagazineFileRepository : FileBaseRepository<MagazineFileRepository>, IMagazineRepository
     {
         private List<Magazine> _magazines;
         protected override string RepositoryName { get; }
 
-        public MagazineRepository()
+        public MagazineFileRepository()
         {
             _magazines = new List<Magazine>();
         }
@@ -23,9 +23,9 @@ namespace Library.Repositories
 
         public List<Magazine> Find(string name) => _magazines.FindAll(i => i.Name.ToLower() == name.ToLower());
 
-        protected override void Write(BinaryWriter writer, MagazineRepository magazineRepo)
+        protected override void Write(BinaryWriter writer, MagazineFileRepository magazineFileRepo)
         {
-            foreach (var magazine in magazineRepo.GetAll())
+            foreach (var magazine in magazineFileRepo.GetAll())
             {
                 if (magazine.Name == null)
                     continue;
@@ -39,9 +39,9 @@ namespace Library.Repositories
             }
         }
 
-        protected override MagazineRepository Read(BinaryReader reader)
+        protected override MagazineFileRepository Read(BinaryReader reader)
         {
-            var magazineRepo = new MagazineRepository();
+            var magazineRepo = new MagazineFileRepository();
             while (reader.PeekChar() > -1)
             {
                 var magazine = new Magazine

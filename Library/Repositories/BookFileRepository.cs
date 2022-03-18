@@ -3,15 +3,14 @@ using System.IO;
 using Library.Models;
 using Library.Utils;
 
-
 namespace Library.Repositories
 {
-    public class BookRepository : FileBaseRepository<BookRepository>, IRepository<Book> 
+    public class BookFileRepository : FileBaseRepository<BookFileRepository>, IBookRepository 
     {
         private List<Book> _books;
         protected override string RepositoryName { get; }
         
-        public BookRepository()
+        public BookFileRepository()
         {
             _books = new List<Book>();
         }
@@ -22,9 +21,9 @@ namespace Library.Repositories
         public void Add(Book book) => _books.Add(book);
 
         public List<Book> Find(string name) => _books.FindAll(i => i.Name.ToLower() == name.ToLower());
-        protected override void Write(BinaryWriter writer, BookRepository bookRepo)
+        protected override void Write(BinaryWriter writer, BookFileRepository bookFileRepo)
         {
-            foreach (var book in bookRepo.GetAll())
+            foreach (var book in bookFileRepo.GetAll())
             {
                 if (book.Name != null)
                 {
@@ -39,9 +38,9 @@ namespace Library.Repositories
             }
         }
 
-        protected override BookRepository Read(BinaryReader reader)
+        protected override BookFileRepository Read(BinaryReader reader)
         {
-            var bookRepo = new BookRepository();
+            var bookRepo = new BookFileRepository();
             while (reader.PeekChar() > -1)
             {
                 var book = new Book

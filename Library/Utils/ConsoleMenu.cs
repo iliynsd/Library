@@ -1,4 +1,5 @@
 using System;
+using Library.Models;
 using Library.Repositories;
 using Library.UI;
 
@@ -17,18 +18,18 @@ namespace Library.Utils
             Console.WriteLine("----------  7.Enter -end to end program  --------");
         }
         
-        public static void ShowMenuAdd(BookRepository bookRepo, MagazineRepository magazineRepo)
+        public static void ShowMenuAdd(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
         {
             Console.WriteLine("Enter -book or -magazine to choose");
             var choose = Console.ReadLine();
             
             if (choose == "-book")
             {
-                bookRepo.Add(UIConsoleCreate.CreateBook());
+                bookFileRepo.Add(UIConsoleCreate.CreateBook());
             }
             else if (choose == "-magazine")
             {
-                magazineRepo.Add(UIConsoleCreate.CreateMagazine());
+                magazineFileRepo.Add(UIConsoleCreate.CreateMagazine());
             }
             else
             {
@@ -40,7 +41,7 @@ namespace Library.Utils
             Console.WriteLine("Enter -help to see commands");
         }
         
-        public static void ShowMenuRemove(BookRepository bookRepo, MagazineRepository magazineRepo)
+        public static void ShowMenuRemove(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
         {
             Console.WriteLine("Enter name book or magazine to remove");
             var name = Console.ReadLine();
@@ -49,11 +50,11 @@ namespace Library.Utils
             
             if (choose == "-book")
             { 
-                bookRepo.Find(name).ForEach(bookRepo.Delete);
+                bookFileRepo.Find(name).ForEach(bookFileRepo.Delete);
             }
             else if (choose == "-magazine")
             {
-                magazineRepo.Find(name).ForEach(magazineRepo.Delete);
+                magazineFileRepo.Find(name).ForEach(magazineFileRepo.Delete);
             }
             else
             {
@@ -66,17 +67,17 @@ namespace Library.Utils
             Console.WriteLine("Enter -help to see commands");
         }
         
-        public static void ShowMenuSearch(BookRepository bookRepo, MagazineRepository magazineRepo)
+        public static void ShowMenuSearch(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
         {
             Console.WriteLine("Enter name of book or magazine to search");
             var name = Console.ReadLine();
-            bookRepo.Find(name).ForEach(UIConsoleShow.ShowBook);
-            magazineRepo.Find(name).ForEach(UIConsoleShow.ShowMagazine);
+            bookFileRepo.Find(name).ForEach(UIConsoleShow.ShowBook);
+            magazineFileRepo.Find(name).ForEach(UIConsoleShow.ShowMagazine);
             Console.WriteLine("You are returned to the main menu");
             Console.WriteLine("Enter -help to see commands");
         }
         
-        public static void ShowEditMenu(BookRepository bookRepo, MagazineRepository magazineRepo)
+        public static void ShowEditMenu(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
         {
             Console.WriteLine("Enter name book or magazine to edit");
             var name = Console.ReadLine();
@@ -85,11 +86,11 @@ namespace Library.Utils
             
             if (choose == "-book")
             {
-                bookRepo.Find(name).ForEach(UIConsoleEdit.EditBook);
+                bookFileRepo.Find(name).ForEach(UIConsoleEdit.EditBook);
             }
             else if (choose == "-magazine")
             {
-                magazineRepo.Find(name).ForEach(UIConsoleEdit.EditMagazine);
+                magazineFileRepo.Find(name).ForEach(UIConsoleEdit.EditMagazine);
             }
             else
             {
