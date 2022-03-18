@@ -18,24 +18,18 @@ namespace Library.Application
                 .Build();
 
             
-            IBookRepository bookRepo = new BookFileRepository();
-            IMagazineRepository magazineRepo = new MagazineFileRepository();
+            IBookRepository books = new BookFileRepository();
+            IMagazineRepository magazines = new MagazineFileRepository();
             
             serviceCollection.AddSingleton(configuration);
             serviceCollection.AddSingleton<Configuration>();
-            serviceCollection.AddSingleton(bookRepo);
-            serviceCollection.AddSingleton<BookRepositoryDI>();
-            serviceCollection.AddSingleton(magazineRepo);
-            serviceCollection.AddSingleton<MagazineRepositoryDI>();
+            serviceCollection.AddSingleton(books);
+            serviceCollection.AddSingleton(magazines);
             var serviceProvider = serviceCollection.BuildServiceProvider();
             var testConfiguration = serviceProvider.GetService<Configuration>();
             
             var pathToBooks = testConfiguration.GetSection("pathToBooks");
             var pathToMagazines = testConfiguration.GetSection("pathToMagazines");
-            
-            
-            var books = serviceProvider.GetService<BookRepositoryDI>();
-            var magazines = serviceProvider.GetService<MagazineRepositoryDI>();
             
             Console.WriteLine("It's a librarian, enter -help to see commands");
             var cmd = Console.ReadLine();

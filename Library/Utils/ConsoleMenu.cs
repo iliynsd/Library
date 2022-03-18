@@ -1,5 +1,4 @@
 using System;
-using Library.Models;
 using Library.Repositories;
 using Library.UI;
 
@@ -18,7 +17,7 @@ namespace Library.Utils
             Console.WriteLine("----------  7.Enter -end to end program  --------");
         }
         
-        public static void ShowMenuAdd(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
+        public static void ShowMenuAdd(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
         {
             Console.WriteLine("Enter -book or -magazine to choose");
             var choose = Console.ReadLine();
@@ -41,7 +40,7 @@ namespace Library.Utils
             Console.WriteLine("Enter -help to see commands");
         }
         
-        public static void ShowMenuRemove(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
+        public static void ShowMenuRemove(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
         {
             Console.WriteLine("Enter name book or magazine to remove");
             var name = Console.ReadLine();
@@ -67,7 +66,7 @@ namespace Library.Utils
             Console.WriteLine("Enter -help to see commands");
         }
         
-        public static void ShowMenuSearch(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
+        public static void ShowMenuSearch(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
         {
             Console.WriteLine("Enter name of book or magazine to search");
             var name = Console.ReadLine();
@@ -77,7 +76,7 @@ namespace Library.Utils
             Console.WriteLine("Enter -help to see commands");
         }
         
-        public static void ShowEditMenu(BookRepositoryDI bookFileRepo, MagazineRepositoryDI magazineFileRepo)
+        public static void ShowEditMenu(IBookRepository bookFileRepo, IMagazineRepository magazineFileRepo)
         {
             Console.WriteLine("Enter name book or magazine to edit");
             var name = Console.ReadLine();
