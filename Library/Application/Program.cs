@@ -31,7 +31,7 @@ namespace Library.Application
             var pathToBooks = testConfiguration.GetSection("pathToBooks");
             var pathToMagazines = testConfiguration.GetSection("pathToMagazines");
 
-            var librarian = new Librarian();
+            var librarian = new Librarian(books, magazines);
             
             Console.WriteLine("It's a librarian, enter -help to see commands");
             var cmd = Console.ReadLine();
@@ -40,7 +40,7 @@ namespace Library.Application
                {
                     if (cmd == "-add")
                     {
-                        librarian.Add(ConsoleMenu.ShowMenuAdd(), books, magazines);
+                        librarian.Add(ConsoleMenu.ShowMenuAdd());
                         Console.WriteLine("You are returned to the main menu");
                     }
                     else if (cmd == "-help")
@@ -50,19 +50,21 @@ namespace Library.Application
                     
                     else if (cmd == "-remove")
                     {
-                        librarian.Remove(ConsoleMenu.ShowMenuRemove(), books, magazines);
+                        librarian.Remove(ConsoleMenu.ShowMenuRemove());
                         Console.WriteLine("Removed if existed, you are returned to the main menu");
                     }
    
                     else if (cmd == "-edit")
                     {
-                        librarian.Edit(ConsoleMenu.ShowEditMenu(), books, magazines);
+                        librarian.Edit(ConsoleMenu.ShowEditMenu());
                         Console.WriteLine("You are returned to the main menu");
                     }
    
                     else if (cmd == "-search")
                     {
-                        librarian.Search(ConsoleMenu.ShowMenuSearch(), books, magazines);
+                        librarian.Search(ConsoleMenu.ShowMenuSearch()
+                        
+                        );
                         Console.WriteLine("You are returned to the main menu");
                     }
                     
