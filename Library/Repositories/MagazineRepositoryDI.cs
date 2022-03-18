@@ -19,5 +19,9 @@ namespace Library.Repositories
         public List<Magazine> GetAll() => _magazineRepository.GetAll();
 
         public List<Magazine> Find(string name) => _magazineRepository.Find(name);
+        
+        public void SaveToDb(string path) => _magazineRepository.SaveToDb(path);
+
+        public void GetFromDb(string path) => _magazineRepository.GetFromDb(path);
     }
 }

@@ -14,6 +14,7 @@ namespace Library.Repositories
         {
             _books = new List<Book>();
         }
+        
         public void Delete(Book book) => _books.RemoveAll(i => i.Name.ToLower() == book.Name.ToLower());
 
         public List<Book> GetAll() => _books;
@@ -21,6 +22,11 @@ namespace Library.Repositories
         public void Add(Book book) => _books.Add(book);
 
         public List<Book> Find(string name) => _books.FindAll(i => i.Name.ToLower() == name.ToLower());
+
+        public void SaveToDb(string source) => SaveToFile(this, source);
+
+        public void GetFromDb(string source) => _books = GetFromFile(source).GetAll();
+        
         protected override void Write(BinaryWriter writer, BookFileRepository bookFileRepo)
         {
             foreach (var book in bookFileRepo.GetAll())

@@ -68,16 +68,16 @@ namespace Library.Application
                     
                     else if (cmd == "-save")
                     {
-                        books.SaveToFile(books, pathToBooks);
-                        magazines.SaveToFile(magazines, pathToMagazines);
+                        books.SaveToDb(pathToBooks);
+                        magazines.SaveToDb(pathToMagazines);
                         Console.WriteLine("Successfully saved");
                         Console.WriteLine("You are returned to the main menu");
                     }
                     
                     else if (cmd == "-read")
                     {
-                        books = books.GetFromFile(pathToBooks);
-                        magazines = magazines.GetFromFile(pathToMagazines);
+                        books.GetFromDb(pathToBooks);
+                        magazines.GetFromDb(pathToMagazines);
                         Console.WriteLine("Successfully read data from files");
                         Console.WriteLine("You are returned to the main menu");
                     }

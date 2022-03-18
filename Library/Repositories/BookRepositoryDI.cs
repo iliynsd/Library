@@ -19,5 +19,9 @@ namespace Library.Repositories
         public List<Book> GetAll() => _bookRepository.GetAll();
 
         public List<Book> Find(string name) => _bookRepository.Find(name);
+
+        public void SaveToDb(string path) => _bookRepository.SaveToDb(path);
+
+        public void GetFromDb(string path) => _bookRepository.GetFromDb(path);
     }
 }

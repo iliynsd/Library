@@ -12,5 +12,9 @@ namespace Library.Repositories
         public List<Magazine> GetAll();
         
         public List<Magazine> Find(string name);
+        
+        public void SaveToDb(string source);
+
+        public void GetFromDb(string source);
     }
 }

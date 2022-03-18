@@ -23,6 +23,10 @@ namespace Library.Repositories
 
         public List<Magazine> Find(string name) => _magazines.FindAll(i => i.Name.ToLower() == name.ToLower());
 
+        public void SaveToDb(string source) => SaveToFile(this, source);
+
+        public void GetFromDb(string source) => _magazines = GetFromFile(source).GetAll();
+        
         protected override void Write(BinaryWriter writer, MagazineFileRepository magazineFileRepo)
         {
             foreach (var magazine in magazineFileRepo.GetAll())

@@ -12,5 +12,9 @@ namespace Library.Repositories
         public List<Book> GetAll();
         
         public List<Book> Find(string name);
+
+        public void SaveToDb(string source);
+
+        public void GetFromDb(string source);
     }
 }
