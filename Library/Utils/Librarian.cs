@@ -1,5 +1,7 @@
+using Library.Config;
 using Library.Repositories;
 using Library.UI;
+using Microsoft.Extensions.Options;
 
 namespace Library.Utils
 {
@@ -8,16 +10,14 @@ namespace Library.Utils
         private IBookRepository _bookRepository;
         private IMagazineRepository _magazineRepository;
         private IMenu _menu;
-        private string _pathToMagazines;
-        private string _pathToBooks;
-
-        public Librarian(IBookRepository bookRepository, IMagazineRepository magazineRepository, string pathToBooks, string pathToMagazines)
+        private PathOptions _options;
+        
+        public Librarian(IBookRepository bookRepository, IMagazineRepository magazineRepository,IMenu menu, PathOptions options)
         {
             _bookRepository = bookRepository;
             _magazineRepository = magazineRepository;
-          //  _menu = menu;
-            _pathToBooks = pathToBooks;
-            _pathToMagazines = pathToMagazines;
+            _menu = menu;
+            _options = options;
         }
 
         public void Add(string choose)
@@ -83,14 +83,14 @@ namespace Library.Utils
                 }
                 else if (command == "-save")
                 {
-                    _bookRepository.SaveToDb(_pathToBooks);
-                    _magazineRepository.SaveToDb(_pathToMagazines);
+                    _bookRepository.SaveToDb(_options.PathToBooks);
+                    _magazineRepository.SaveToDb(_options.PathToMagazines);
                     _menu.MenuAfterSaveData();
                 }
                 else if (command == "-read")
                 {
-                    _bookRepository.GetFromDb(_pathToBooks);
-                    _magazineRepository.GetFromDb(_pathToMagazines);
+                    _bookRepository.GetFromDb(_options.PathToBooks);
+                    _magazineRepository.GetFromDb(_options.PathToMagazines);
                     _menu.MenuAfterReadData();
                 }
                 else
