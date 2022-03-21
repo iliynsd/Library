@@ -31,65 +31,16 @@ namespace Library.Application
             var pathToBooks = testConfiguration.GetSection("pathToBooks");
             var pathToMagazines = testConfiguration.GetSection("pathToMagazines");
 
-            var librarian = new Librarian(books, magazines);
+            var menu = new ConsoleMenu();
+            var librarian = new Librarian(books, magazines,menu, pathToBooks, pathToMagazines);
             
             Console.WriteLine("It's a librarian, enter -help to see commands");
             var cmd = Console.ReadLine();
                
                while (cmd != "-end")
                {
-                    if (cmd == "-add")
-                    {
-                        librarian.Add(ConsoleMenu.ShowMenuAdd());
-                        Console.WriteLine("You are returned to the main menu");
-                    }
-                    else if (cmd == "-help")
-                    {
-                        ConsoleMenu.ShowMainMenu();
-                    }
-                    
-                    else if (cmd == "-remove")
-                    {
-                        librarian.Remove(ConsoleMenu.ShowMenuRemove());
-                        Console.WriteLine("Removed if existed, you are returned to the main menu");
-                    }
-   
-                    else if (cmd == "-edit")
-                    {
-                        librarian.Edit(ConsoleMenu.ShowEditMenu());
-                        Console.WriteLine("You are returned to the main menu");
-                    }
-   
-                    else if (cmd == "-search")
-                    {
-                        librarian.Search(ConsoleMenu.ShowMenuSearch()
-                        
-                        );
-                        Console.WriteLine("You are returned to the main menu");
-                    }
-                    
-                    else if (cmd == "-save")
-                    {
-                        books.SaveToDb(pathToBooks);
-                        magazines.SaveToDb(pathToMagazines);
-                        Console.WriteLine("Successfully saved");
-                        Console.WriteLine("You are returned to the main menu");
-                    }
-                    
-                    else if (cmd == "-read")
-                    {
-                        books.GetFromDb(pathToBooks);
-                        magazines.GetFromDb(pathToMagazines);
-                        Console.WriteLine("Successfully read data from files");
-                        Console.WriteLine("You are returned to the main menu");
-                    }
-                    
-                    else
-                    {
-                        Console.WriteLine("No such command");
-                        Console.WriteLine("Enter -help to see commands");
-                    }
-                    cmd = Console.ReadLine();
+                   librarian.Execute(cmd);
+                   cmd = Console.ReadLine();
                }
         }
     }

@@ -2,9 +2,9 @@ using System;
 
 namespace Library.Utils
 {
-    public class ConsoleMenu
+    public class ConsoleMenu : IMenu
     {
-        public static void ShowMainMenu()
+        public void ShowMainMenu()
         {
             Console.WriteLine("----------  1.Enter -add to add book or magazine  ------------");
             Console.WriteLine("----------  2.Enter -remove to delete book or magazine  --------");
@@ -15,7 +15,7 @@ namespace Library.Utils
             Console.WriteLine("----------  7.Enter -end to end program  --------");
         }
         
-        public static string ShowMenuAdd()
+        public string ShowMenuAdd()
         {
             Console.WriteLine("Enter -book or -magazine to choose");
             var choose = Console.ReadLine();
@@ -27,22 +27,50 @@ namespace Library.Utils
             return choose;
         }
         
-        public static string ShowMenuRemove()
+        public string ShowMenuRemove()
         {
             Console.WriteLine("Enter name book or magazine to remove");
             return Console.ReadLine();
         }
         
-        public static string ShowMenuSearch()
+        public string ShowMenuSearch()
         {
             Console.WriteLine("Enter name of book or magazine to search");
             return Console.ReadLine();
         }
         
-        public static string ShowEditMenu()
+        public string ShowEditMenu()
         {
             Console.WriteLine("Enter name book or magazine to edit");
             return Console.ReadLine();
+        }
+
+        public void BackToTheMainMenu()
+        {
+            Console.WriteLine("You are returned to the main menu");
+        }
+
+        public void MenuAfterRemove()
+        {
+            Console.WriteLine("Removed if existed, you are returned to the main menu");
+        }
+
+        public void MenuAfterSaveData()
+        {
+            Console.WriteLine("Successfully saved");
+            Console.WriteLine("You are returned to the main menu");
+        }
+
+        public void MenuAfterReadData()
+        {
+            Console.WriteLine("Successfully read data from files");
+            Console.WriteLine("You are returned to the main menu");
+        }
+
+        public void IncorrectInput()
+        {
+            Console.WriteLine("No such command");
+            Console.WriteLine("Enter -help to see commands");
         }
     }
 }
