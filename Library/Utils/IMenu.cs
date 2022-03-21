@@ -12,5 +12,7 @@ namespace Library.Utils
         public void MenuAfterSaveData();
         public void MenuAfterReadData();
         public void IncorrectInput();
+        public void Hello();
+        public string GetCommand();
     }
 }

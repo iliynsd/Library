@@ -72,5 +72,15 @@ namespace Library.Utils
             Console.WriteLine("No such command");
             Console.WriteLine("Enter -help to see commands");
         }
+
+        public void Hello()
+        {
+            Console.WriteLine("It's a librarian, enter -help to see commands");
+        }
+
+        public string GetCommand()
+        {
+            return Console.ReadLine();
+        }
     }
 }

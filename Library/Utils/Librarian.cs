@@ -11,14 +11,15 @@ namespace Library.Utils
         private string _pathToMagazines;
         private string _pathToBooks;
 
-        public Librarian(IBookRepository bookRepository, IMagazineRepository magazineRepository,IMenu menu, string pathToBooks, string pathToMagazines)
+        public Librarian(IBookRepository bookRepository, IMagazineRepository magazineRepository, string pathToBooks, string pathToMagazines)
         {
             _bookRepository = bookRepository;
             _magazineRepository = magazineRepository;
-            _menu = menu;
+          //  _menu = menu;
             _pathToBooks = pathToBooks;
             _pathToMagazines = pathToMagazines;
         }
+
         public void Add(string choose)
         {
             if (choose == "-book")
@@ -49,53 +50,55 @@ namespace Library.Utils
             _magazineRepository.Find(name).ForEach(UIConsoleShow.ShowMagazine);
         }
 
-        public void Execute(string command)
+        public void Execute()
         {
-            if (command == "-add")
+            _menu.Hello();
+            string command = _menu.GetCommand();
+
+            while (command != "-end")
             {
-                Add(_menu.ShowMenuAdd());
-                _menu.BackToTheMainMenu();
-            }
-            else if (command == "-help")
-            {
-                _menu.ShowMainMenu();
-            }
-                    
-            else if (command == "-remove")
-            {
-                Remove(_menu.ShowMenuRemove());
-                _menu.MenuAfterRemove();
-            }
-   
-            else if (command == "-edit")
-            {
-                Edit(_menu.ShowEditMenu());
-                _menu.BackToTheMainMenu();
-            }
-   
-            else if (command == "-search")
-            {
-                Search(_menu.ShowMenuSearch());
-                _menu.BackToTheMainMenu();
-            }
-                    
-            else if (command == "-save")
-            {
-                _bookRepository.SaveToDb(_pathToBooks);
-                _magazineRepository.SaveToDb(_pathToMagazines);
-                _menu.MenuAfterSaveData();
-            }
-                    
-            else if (command == "-read")
-            {
-                _bookRepository.GetFromDb(_pathToBooks);
-                _magazineRepository.GetFromDb(_pathToMagazines);
-                _menu.MenuAfterReadData();
-            }
-            
-            else
-            {
-                _menu.IncorrectInput();
+                if (command == "-add")
+                {
+                    Add(_menu.ShowMenuAdd());
+                    _menu.BackToTheMainMenu();
+                }
+                else if (command == "-help")
+                {
+                    _menu.ShowMainMenu();
+                }
+                else if (command == "-remove")
+                {
+                    Remove(_menu.ShowMenuRemove());
+                    _menu.MenuAfterRemove();
+                }
+                else if (command == "-edit")
+                {
+                    Edit(_menu.ShowEditMenu());
+                    _menu.BackToTheMainMenu();
+                }
+                else if (command == "-search")
+                {
+                    Search(_menu.ShowMenuSearch());
+                    _menu.BackToTheMainMenu();
+                }
+                else if (command == "-save")
+                {
+                    _bookRepository.SaveToDb(_pathToBooks);
+                    _magazineRepository.SaveToDb(_pathToMagazines);
+                    _menu.MenuAfterSaveData();
+                }
+                else if (command == "-read")
+                {
+                    _bookRepository.GetFromDb(_pathToBooks);
+                    _magazineRepository.GetFromDb(_pathToMagazines);
+                    _menu.MenuAfterReadData();
+                }
+                else
+                {
+                    _menu.IncorrectInput();
+                }
+
+                command = _menu.GetCommand();
             }
         }
     }
