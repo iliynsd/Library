@@ -5,14 +5,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Resources" />
+      <Folder Update="Resources" />
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="Resources\magazines.dat">
+      <None Update="Resources\magazines.dat">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Include="Resources\books.dat">
+      <None Update="Resources\books.dat">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="appSettings.json">
@@ -28,6 +28,8 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
       <PackageReference Include="Unity.Container" Version="5.11.11" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,5 @@
-using Library.Config;
 using Library.Repositories;
 using Library.UI;
-using Microsoft.Extensions.Options;
 
 namespace Library.Utils
 {
@@ -10,14 +8,12 @@ namespace Library.Utils
         private IBookRepository _bookRepository;
         private IMagazineRepository _magazineRepository;
         private IMenu _menu;
-        private PathOptions _options;
-        
-        public Librarian(IBookRepository bookRepository, IMagazineRepository magazineRepository,IMenu menu, PathOptions options)
+
+        public Librarian(IBookRepository bookRepository, IMagazineRepository magazineRepository,IMenu menu)
         {
             _bookRepository = bookRepository;
             _magazineRepository = magazineRepository;
             _menu = menu;
-            _options = options;
         }
 
         public void Add(string choose)
@@ -50,7 +46,7 @@ namespace Library.Utils
             _magazineRepository.Find(name).ForEach(UIConsoleShow.ShowMagazine);
         }
 
-        public void Execute()
+        public void Execute(string pathToBooks, string pathToMagazines)
         {
             _menu.Hello();
             string command = _menu.GetCommand();
@@ -83,14 +79,14 @@ namespace Library.Utils
                 }
                 else if (command == "-save")
                 {
-                    _bookRepository.SaveToDb(_options.PathToBooks);
-                    _magazineRepository.SaveToDb(_options.PathToMagazines);
+                    _bookRepository.SaveToDb(pathToBooks);
+                    _magazineRepository.SaveToDb(pathToMagazines);
                     _menu.MenuAfterSaveData();
                 }
                 else if (command == "-read")
                 {
-                    _bookRepository.GetFromDb(_options.PathToBooks);
-                    _magazineRepository.GetFromDb(_options.PathToMagazines);
+                    _bookRepository.GetFromDb(pathToBooks);
+                    _magazineRepository.GetFromDb(pathToMagazines);
                     _menu.MenuAfterReadData();
                 }
                 else
